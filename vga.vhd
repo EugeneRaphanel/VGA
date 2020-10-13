@@ -1,5 +1,3 @@
--- VGA driver for Altera UP1 board  Rob Chapman  Feb 22, 1998
-
 Library IEEE;
 use IEEE.STD_Logic_1164.all;
 use ieee.std_logic_arith.all;
@@ -25,20 +23,20 @@ entity VGAdrive is
 end;
 
 architecture behaviour1 of VGAdrive is
-  constant freq : natural := 50000000;
+ -- constant freq : natural := 50000000;
 
-  --Signaux de synchronisation Horizontaux dÃ©finis pour 600*800 72Mhz
-  constant HAV : natural := 800/freq;
-  constant HFP : natural := 56/freq;
-  constant HSync : natural := 120/freq;
-  constant HBP : natural := 60/freq;
+  --Signaux de synchronisation Horizontaux définis pour 600*800 72Mhz
+  constant HAV : natural := 800;
+  constant HFP : natural := 56;
+  constant HSync : natural := 120;
+  constant HBP : natural := 60;
   constant HTOT : natural :=  HAV+HFP+HSync+HBP;
 
   --Signaux de synchronisation Verticaux
-  constant VAV : natural := 600*800/freq;
-  constant VFP : natural := 376*800/freq;
-  constant VSync : natural := 6*800/freq;
-  constant VBP : natural := 23*800/freq;
+  constant VAV : natural := 600*800;
+  constant VFP : natural := 376*800;
+  constant VSync : natural := 6*800;
+  constant VBP : natural := 23*800;
   constant VTOT : natural :=  VAV+VFP+VSync+VBP;
 
   begin
@@ -49,7 +47,9 @@ architecture behaviour1 of VGAdrive is
   Bout <= blue;
 
   process
-  variable vertical, horizontal : counter;
+	variable counter : std_logic_vector (9 downto 0); 
+	variable vertical : std_logic_vector (9 downto 0); 
+	variable horizontal : std_logic_vector (9 downto 0); 
     begin
 
     -- increment counters
@@ -73,7 +73,7 @@ architecture behaviour1 of VGAdrive is
         end if;
 
     -- define V pulse
-        if  vertical >= ((VAV+VFP)  and  vertical < (VAV +VFP+VSync)) then
+        if  (vertical >= ((VAV+VFP))  and  (vertical < (VAV +VFP+VSync))) then
           V <= '0';
         else
           V <= '1';
