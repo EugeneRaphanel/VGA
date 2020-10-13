@@ -1,0 +1,9 @@
+#!/bin/csh
+vlib work
+vcom -93 vga.vhd
+vcom -93 vga_simu.vhd
+
+vsim -novopt vgatest
+
+view signals
+add wave *
